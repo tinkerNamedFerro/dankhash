@@ -1,0 +1,38 @@
+ _____              _    _    _           _     
+|  __ \            | |  | |  | |         | |    
+| |  | | __ _ _ __ | | _| |__| | __ _ ___| |__  
+| |  | |/ _` | '_ \| |/ /  __  |/ _` / __| '_ \ 
+| |__| | (_| | | | |   <| |  | | (_| \__ \ | | |
+|_____/ \__,_|_| |_|_|\_\_|  |_|\__,_|___/_| |_|
+                                                
+1)Ethereum file hash to domain. Verify your favourite file hashes with a domain name.
+e.g. When making an Android rom or linux distro user can check the integrity of their downloaded on a completely trustless service 
+
+Security the integrity of files can be difficult especially when their distribute via torrenting. 
+A common hashing conundrum is simply displaying the sha256 of files isn't enough. If an attack has access to change the downloadable file they could easily change the 
+https://youtu.be/b4b8ktEV4Bg?list=UU9-y-6csu5WGm29I7JiwpnA&t=394
+https://security.stackexchange.com/questions/86234/how-do-i-check-the-hash-of-an-iso
+
+
+
+ISO SHA256
+	https://www.kali.org/downloads/
+
+
+https://medium.com/the-ethereum-name-service/how-to-claim-your-dns-domain-on-ens-e600ef2d92ca
+
+https://itnext.io/build-a-simple-ethereum-interplanetary-file-system-ipfs-react-js-dapp-23ff4914ce4e
+
+----------------------------------------
+Accessing Domain from Ethereum Network |
+----------------------------------------
+https://medium.com/the-ethereum-name-service/how-to-claim-your-dns-domain-on-ens-e600ef2d92ca
+
+-------------------
+SETTING UP DNSSEC |
+-------------------
+Setting up dns for domain:
+	https://au.godaddy.com/help/manage-dnssec-for-my-domain-6115
+
+Checking domain as DNSSEC
+	https://dnssec-debugger.verisignlabs.com/
