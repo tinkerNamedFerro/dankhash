@@ -19,8 +19,10 @@ contract DankHash {
 
     struct HashDesc {
         string name;
+        string url;
         uint version; 
         uint256 date; //https://ethereum.stackexchange.com/questions/32173/how-to-handle-dates-in-solidity-and-web3/32179
+        address hashUploader;
     }
 
     event addHash (bytes32 newHash);
@@ -39,12 +41,17 @@ contract DankHash {
         emit addHash(newHash);
         address2FileHash[msg.sender] = newHash;
         fileHash2Address[newHash] = msg.sender;
-        SafeMath.add(0, 1);
         return newHash.length;
     }
 
-    function CheckFileProvider(bytes32 queryHash) public view  returns (address) {
-        return fileHash2Address[queryHash];
+    function CheckFileProvider(bytes32 queryHash) public view  returns (string name, string url, uint version, uint date, address hashUploader) {
+        name = hashInfo[queryHash].name;
+        url = hashInfo[queryHash].url;
+        version = hashInfo[queryHash].version;
+        date = hashInfo[queryHash].date;
+        hashUploader = hashInfo[queryHash].hashUploader;
+
+        return(name, url, version, date, hashUploader);
     }
 
 }
