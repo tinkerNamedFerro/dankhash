@@ -7,15 +7,35 @@ contract DankHash {
     //Importing safemath
     using SafeMath for uint256;
     //Set Owner of Contract
-    address owner;
-    //bytes32 public hashes;
-    
+    mapping(address => bool)admins;
 
-    //Bi-Directional mapping 
-    // This allows for the value to find the key and vise versa 
-    //https://ethereum.stackexchange.com/questions/4272/getting-key-from-solidity-mapping-by-value
-    //mapping (address => bytes32) public address2FileHash;
-    //mapping (bytes32 => address) public fileHash2Address;
+    constructor() public {
+        admins[msg.sender] = true;
+    }
+
+    modifier onlyAdmin{
+        require(admins[msg.sender]==true,"Address not admin");
+        _;
+    }
+
+    function addAdmin (address _a) public onlyAdmin returns (bool){
+        admins[_a] = true;
+        return true;
+    }
+
+    function kill() public onlyAdmin{
+        selfdestruct(msg.sender);
+    }
+
+    bool public stopped = false;
+
+    modifier stopInEmergency{require(!stopped,""); _;}
+    modifier onlyInEmergency{require(stopped,""); _;}
+   
+    function switchStopped() public onlyAdmin {
+        stopped = !stopped; //toggle stopped so true = false and false = true
+    }
+
     mapping (bytes32 => HashDesc) public hashInfo;
 
     struct HashDesc {
@@ -28,17 +48,16 @@ contract DankHash {
 
     event addHash (bytes32 newHash);
 
-    //Checking for hash size is impossible as all values are a vaild hash
-    // modifier checkHashSize (bytes32 hash){
-    //     require(hash.length == 64, "Input is not correct length");
-    //     _;
-    // }
-
-    constructor() public {
-        owner = msg.sender;
-    }
-    //function AddFileHash(bytes32 newHash) public checkHashSize(newHash) returns (bytes32){
-    function AddFileHash(bytes32 newHash, string name, string url, uint version, uint date) public returns (bool){
+     /** @dev Calculates a rectangle's surface and perimeter.
+      * @param newHash Width of the rectangle.
+      * @param name Height of the rectangle.
+      * @param url Height of the rectangle.
+      * @param version Height of the rectangle.
+      * @param date Height of the rectangle.
+      * @return s The calculated surface.
+      * @return p The calculated perimeter.
+      */
+    function AddFileHash(bytes32 newHash, string name, string url, uint version, uint date) public returns (bool, bytes32){
         emit addHash(newHash);
         //Check if hash is new or be the same owner
         if (hashInfo[newHash].hashUploader == address(0x0) || hashInfo[newHash].hashUploader == msg.sender){ 
@@ -47,9 +66,9 @@ contract DankHash {
             hashInfo[newHash].version = version;
             hashInfo[newHash].date = date;
             hashInfo[newHash].hashUploader = msg.sender;
-            return true;
+            return (true, newHash);
         } else {
-            return false;
+            return (false, newHash);
         }
         
     }
