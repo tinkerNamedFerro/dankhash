@@ -25,6 +25,7 @@ contract('DankHash', function(accounts) {
 
     it("1) should add file hash with file details", async() => {
         //This test is users can upload file hashes 
+        //WHY: Basic funtionality test
         const dankhash = await DankHash.deployed()
 
         var eventEmitted = false
@@ -41,6 +42,7 @@ contract('DankHash', function(accounts) {
 
     it("2) Alice can change her upload", async() => {
         //This tests if user's file hashes can be modified by themselves
+        //WHY: Cause everyone makes mistakes 
         const dankhash = await DankHash.deployed()
 
         var eventEmitted = false
@@ -55,7 +57,8 @@ contract('DankHash', function(accounts) {
     })
 
     it("3) bob can't change alice's upload", async() => {
-        //This tests if other people can modify other user's hash files. 
+        //This tests if other people can modify other user's hash files.
+        //WHY: cause we don't want hackers 
         const dankhash = await DankHash.deployed()
         var hacked  = "false"
 
@@ -75,6 +78,7 @@ contract('DankHash', function(accounts) {
 
     it("4) circuit breaker stops AddFileHash", async() => {
         //This test is used to check self destruction. It should only be accessable via admin permissions
+        //WHY: I definitely make mistakes even if little ones
         const dankhash = await DankHash.deployed()
         var AddFileHashUnaccessable  = "false"
 
@@ -100,6 +104,7 @@ contract('DankHash', function(accounts) {
     it("5) admins can kill contract", async() => {
         //This test is used to check self destruction. It should only be accessable via admin permissions
         //This function nneds to be tested last as it destroys the contract.
+        //WHY: Cause I'm a total fuck up and should end it all.
         const dankhash = await DankHash.deployed()
         var destroyed  = "false"
 
