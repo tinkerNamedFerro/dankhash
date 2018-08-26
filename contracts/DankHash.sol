@@ -17,7 +17,11 @@ contract DankHash {
         require(admins[msg.sender]==true,"Address not admin");
         _;
     }
-
+     
+      /** @dev This function adds to the list of approved admins that can interact with the contract.
+      * @param _a A address representing the user that will gain admin permissions
+      * @return bool returns true if the address has admin permissions
+      */
     function addAdmin (address _a) public onlyAdmin returns (bool){
         admins[_a] = true;
         return true;
@@ -31,14 +35,19 @@ contract DankHash {
 
     modifier stopInEmergency{require(!stopped,""); _;}
     modifier onlyInEmergency{require(stopped,""); _;}
-   
-    function switchStopped() public onlyAdmin {
+
+
+     /** @dev This function is used to change the state of a circuit breaker design pattern, when the function is called it switches the state of the stopped variable.
+      * @return stopped returns the new state of the circuit breaker variable
+      */
+    function switchStopped() public onlyAdmin returns (bool){
         stopped = !stopped; //toggle stopped so true = false and false = true
+        return(stopped);
     }
+    
+    mapping (bytes32 => HashDesc) public hashInfo; // This mapping connects file hashs to to their general info struct
 
-    mapping (bytes32 => HashDesc) public hashInfo;
-
-    struct HashDesc {
+    struct HashDesc { //General Info Struct for file hashes. 
         string name;
         string url;
         uint version; 
@@ -48,14 +57,14 @@ contract DankHash {
 
     event addHash (bytes32 newHash);
 
-     /** @dev Calculates a rectangle's surface and perimeter.
-      * @param newHash Width of the rectangle.
-      * @param name Height of the rectangle.
-      * @param url Height of the rectangle.
-      * @param version Height of the rectangle.
-      * @param date Height of the rectangle.
-      * @return s The calculated surface.
-      * @return p The calculated perimeter.
+     /** @dev This function allows users to submit a SHA256 file hash and general info related to the file.
+      * @param newHash A bytes32 variable that represents a SHA256 hash of a file.
+      * @param name A string variable that represents the filename of hash.
+      * @param url A string variable that represents the URL where the file can be downloaded from.
+      * @param version A int representing the version number of the file, currently doesn't support floating point numbers.
+      * @param date A int that's only 6 digits long representing the date. e.g 25 of March 2018 would equal 250318
+      * @return status returns a bool, true is successful and false is unsuccessful.
+      * @return newhash returns bytes32 of the input array for the frontend 
       */
     function AddFileHash(bytes32 newHash, string name, string url, uint version, uint date) public returns (bool, bytes32){
         emit addHash(newHash);
@@ -72,7 +81,14 @@ contract DankHash {
         }
         
     }
-
+      /** @dev This a stateless function used by the frontend to get info relating to file hash.
+      * @param queryHassh A bytes32 variable that represents a SHA256 hash of a file.
+      * @return name returns a string representing the name of the file hash
+      * @return url returns a string representing the URL of where the file can be accessed 
+      * @return version returns an int representing the version number of the file
+      * @return date returns an int representing the date of file hash upload
+      * @return hashUploader returns an address representing witch user uploaded the file.
+      */
     function CheckFileProvider(bytes32 queryHash) public view  returns (string name, string url, uint version, uint date, address hashUploader) {
         name = hashInfo[queryHash].name;
         url = hashInfo[queryHash].url;

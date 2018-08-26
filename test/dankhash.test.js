@@ -7,7 +7,7 @@ contract('DankHash', function(accounts) {
     const alice = accounts[1]
     const bob = accounts[2]
     const emptyAddress = '0x0000000000000000000000000000000000000000'
-    //const newHash = '0x043A718774C572BD8A25ADBEB1BFCD5C0256AE11CECF9F9C3F925D0E52BEAF89'
+    const newHash = '0x043A718774C572BD8A25ADBEB1BFCD5C0256AE11CECF9F9C3F925D0E52BEAF89'
     const newHash = '0x2313'
 
     it("should add an item with the provided name and price", async() => {
