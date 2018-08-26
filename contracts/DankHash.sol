@@ -22,12 +22,14 @@ contract DankHash {
       * @param _a A address representing the user that will gain admin permissions
       * @return bool returns true if the address has admin permissions
       */
-    function addAdmin (address _a) public onlyAdmin returns (bool){
+    function AddAdmin (address _a) public onlyAdmin returns (bool){
         admins[_a] = true;
         return true;
     }
 
-    function kill() public onlyAdmin{
+     /** @dev Destoy contract with admin approval.
+      */
+    function Kill() public onlyAdmin{
         selfdestruct(msg.sender);
     }
 
@@ -40,7 +42,7 @@ contract DankHash {
      /** @dev This function is used to change the state of a circuit breaker design pattern, when the function is called it switches the state of the stopped variable.
       * @return stopped returns the new state of the circuit breaker variable
       */
-    function switchStopped() public onlyAdmin returns (bool){
+    function SwitchStopped() public onlyAdmin returns (bool){
         stopped = !stopped; //toggle stopped so true = false and false = true
         return(stopped);
     }
@@ -66,23 +68,21 @@ contract DankHash {
       * @return status returns a bool, true is successful and false is unsuccessful.
       * @return newhash returns bytes32 of the input array for the frontend 
       */
-    function AddFileHash(bytes32 newHash, string name, string url, uint version, uint date) public returns (bool, bytes32){
+    function AddFileHash(bytes32 newHash, string name, string url, uint version, uint date) public stopInEmergency returns (bool, bytes32){
         emit addHash(newHash);
         //Check if hash is new or be the same owner
-        if (hashInfo[newHash].hashUploader == address(0x0) || hashInfo[newHash].hashUploader == msg.sender){ 
-            hashInfo[newHash].name = name;
-            hashInfo[newHash].url = url;
-            hashInfo[newHash].version = version;
-            hashInfo[newHash].date = date;
-            hashInfo[newHash].hashUploader = msg.sender;
-            return (true, newHash);
-        } else {
-            return (false, newHash);
-        }
+        require (hashInfo[newHash].hashUploader == address(0x0) || hashInfo[newHash].hashUploader == msg.sender,"You didn't upload this hash"); 
+        hashInfo[newHash].name = name;
+        hashInfo[newHash].url = url;
+        hashInfo[newHash].version = version;
+        hashInfo[newHash].date = date;
+        hashInfo[newHash].hashUploader = msg.sender;
+        return (true, newHash);
+       
         
     }
       /** @dev This a stateless function used by the frontend to get info relating to file hash.
-      * @param queryHassh A bytes32 variable that represents a SHA256 hash of a file.
+      * @param queryHash A bytes32 variable that represents a SHA256 hash of a file.
       * @return name returns a string representing the name of the file hash
       * @return url returns a string representing the URL of where the file can be accessed 
       * @return version returns an int representing the version number of the file

@@ -4,35 +4,121 @@ var DankHash = artifacts.require('DankHash')
 
 contract('DankHash', function(accounts) {
     const owner = accounts[0]
-    const alice = accounts[1]
-    const bob = accounts[2]
     const emptyAddress = '0x0000000000000000000000000000000000000000'
-    const newHash = '0x043A718774C572BD8A25ADBEB1BFCD5C0256AE11CECF9F9C3F925D0E52BEAF89'
-    const newHash = '0x2313'
+    
+    const bob = accounts[2]
+    const bob_newHash = 0x554f020b0c89d5978928d31b8635a7eeddf0a3900abcacdbc39616f80d247f86;
+    const bob_name = "Kali Linux Light 64 Bit"
+    const bob_url = "https://www.kali.org/downloads/";
+    const bob_version = 20182;
+    const bob_date = 260818;
+    
+    const alice = accounts[1]
+    const alice_newHash = 0x56f677e2edfb2efcd0b08662ddde824e254c3d53567ebbbcdbbf5c03efd9bc0f
+    const alice_name = "Kali Linux 64 Bit";
+    const alice_url = "https://www.kali.org/downloads/";
+    const alice_version = 20182;
+    const alice_date = 260818;
 
-    it("should add an item with the provided name and price", async() => {
+    const alice_new_name = "kitty cat 64 bit"
+    const alice_new_url = "http://www.memes.com"
+
+    it("1) should add file hash with file details", async() => {
+        //This test is users can upload file hashes 
         const dankhash = await DankHash.deployed()
 
         var eventEmitted = false
 
-        // var event = dankhash.ForSale()
-        // await event.watch((err, res) => {
-        //     sku = res.args.sku.toString(10)
-        //     eventEmitted = true
-        // })
+        await dankhash.AddFileHash(alice_newHash, alice_name, alice_url, alice_version, alice_date, {from: alice})
+        const checkFileResult = await dankhash.CheckFileProvider.call(alice_newHash, {from: alice})
 
-        //const name = "book"
-
-        const result = await dankhash.AddFileHash.call(newHash, {from: alice})
-
-        // const result = await dankhash.fetchItem.call(sku)
-        console.log(result);
-        // assert.equal(result[0], name, 'the name of the last added item does not match the expected value')
-        // assert.equal(result[2].toString(10), price, 'the price of the last added item does not match the expected value')
-        // assert.equal(result[3].toString(10), 0, 'the state of the item should be "For Sale", which should be declared first in the State Enum')
-        // assert.equal(result[4], alice, 'the address adding the item should be listed as the seller')
-        // assert.equal(result[5], emptyAddress, 'the buyer address should be set to 0 when an item is added')
-        // assert.equal(eventEmitted, true, 'adding an item should emit a For Sale event')
+        assert.equal(checkFileResult[0], alice_name, 'Name should equal const name "Kali Linux"')
+        assert.equal(checkFileResult[1], alice_url, 'URL should equal const URL "https://www.kali.org/downloads/"')
+        assert.equal(checkFileResult[2].c, alice_version, 'Version should equal const URL "20182"')
+        assert.equal(checkFileResult[3].c, alice_date, 'Date should equal const Date "260818"')
+        assert.equal(checkFileResult[4], alice, 'hashUploader should have the same address is uploader')
     })
+
+    it("2) Alice can change her upload", async() => {
+        //This tests if user's file hashes can be modified by themselves
+        const dankhash = await DankHash.deployed()
+
+        var eventEmitted = false
+
+
+        await dankhash.AddFileHash(alice_newHash, alice_new_name, alice_new_url, alice_version, alice_date, {from: alice})
+        const checkFileResult = await dankhash.CheckFileProvider.call(alice_newHash, {from: alice})
+
+        assert.equal(checkFileResult[0], alice_new_name, 'Name should equal const name "Kali Linux"')
+        assert.equal(checkFileResult[1], alice_new_url, 'URL should equal const URL "https://www.kali.org/downloads/"')
+        assert.equal(checkFileResult[4], alice, 'hashUploader should have the same address is uploader')
+    })
+
+    it("3) bob can't change alice's upload", async() => {
+        //This tests if other people can modify other user's hash files. 
+        const dankhash = await DankHash.deployed()
+        var hacked  = "false"
+
+        var eventEmitted = false
+        
+        
+        try{
+            await dankhash.AddFileHash(alice_newHash, bob_name, bob_url, bob_version, bob_date, {from: bob})
+            hacked = "true";   
+        }
+        catch(err){
+        }
+
+        assert.equal("false", hacked, "This means you've been hacked")
+
+    })
+
+    it("4) circuit breaker stops AddFileHash", async() => {
+        //This test is used to check self destruction. It should only be accessable via admin permissions
+        const dankhash = await DankHash.deployed()
+        var AddFileHashUnaccessable  = "false"
+
+        var eventEmitted = false
+        
+        await dankhash.SwitchStopped( {from: owner})
+
+        
+        
+        try{
+            //Test if contract is destroyed
+            await dankhash.AddFileHash(bob_newHash, bob_name, bob_url, bob_version, bob_date, {from: bob})
+            AddFileHashUnaccessable = "true";   
+        }
+        catch(err){
+        }
+
+        await dankhash.SwitchStopped( {from: owner}) //Resetting function accessable for next test
+        
+        assert.equal("false", AddFileHashUnaccessable, "AddFileHash function can still be called")
+    })
+
+    it("5) admins can kill contract", async() => {
+        //This test is used to check self destruction. It should only be accessable via admin permissions
+        //This function nneds to be tested last as it destroys the contract.
+        const dankhash = await DankHash.deployed()
+        var destroyed  = "false"
+
+        var eventEmitted = false
+        
+        await dankhash.Kill( {from: owner})
+        
+        try{
+            //Test if contract is destroyed
+            await dankhash.AddFileHash(bob_newHash, bob_name, bob_url, bob_version, bob_date, {from: bob})
+            destroyed = "true";   
+        }
+        catch(err){
+        }
+
+        
+        assert.equal("false", destroyed, "Can still access contract after destruction")
+    })
+
+
 
 });
