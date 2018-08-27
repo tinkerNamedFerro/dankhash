@@ -4,7 +4,7 @@ DankHASH is a decentralised file author verifier using SHA256. Authors can uploa
 *DankHASH inspires to become an untamperable repository of file hashes where users can easily test all their softwares validity *
 
 ### See For Yourself
-Visit dankhash.org for live demo or download yourself
+Visit [www.dankhash.org](www.dankhash.org) for live demo or download yourself
 ##### Deploying yourself
 1) Move Frontend directory to a web server like digital ocean or IPFS (for you cool cats)
 2) Before deploying the contract I recommend using the truffle test file to ensure everything is kinda working.

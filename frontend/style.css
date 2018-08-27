@@ -1,0 +1,454 @@
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:  #313131;
+  font-family: 'Raleway', sans-serif;
+  /* position: relative; */
+}
+
+#use-javascript {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-image: linear-gradient(45deg, #00adb5, #00959c);
+}
+
+.use-javascript-text {
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  font-size: 16pt;
+  height: 100vh;
+  line-height: 100vh;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.logoDankHash {
+  font-size: 9pt;
+  color:#bd00ff;
+  text-align: left;
+}
+
+.container {
+  width: 100%;
+  position: absolute;
+  margin: 0 auto;
+}
+
+.top {
+  height: 20%;
+  float: top;
+  padding-top: 10px;
+  /* height: 100vh; */
+  background: #313131;
+/*   overflow: scroll; */
+}
+
+.left {
+  width: 50%;
+  float: left;
+  height: 100vh;
+  background: #313131;
+/*   overflow: scroll; */
+}
+
+.right {
+/*   overflow: scroll; */
+  width: 50%;
+  float: right;
+  min-height: 100vh;
+  background-color: #3131315;
+  /* background-image: linear-gradient(45deg, #00adb5, #00959c); */
+}
+
+.raise-fields {
+  /* background: #313131; */
+  padding: 48px;
+}
+
+.how-to {
+  margin: 0 auto;
+  padding: 48px;
+  /* position: absolute;
+  top: 50%;
+  transform: translateY(-50%); */
+}
+
+h2 {
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  color: #fff;
+  padding: 200px auto;
+}
+
+
+.how-to ol {
+  padding: 36px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14pt;
+}
+
+.how-to ol li {
+  font-weight: 400;
+}
+
+p {
+  padding: 16px 36px;
+  color: #fff;
+  font-size: 14pt;
+}
+
+p.terms {
+	font-size: 12pt;
+  padding: 12px;
+	color: #666;
+	width: 330px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+p.terms a:link,
+p.terms a:visited {
+	color: #00adb5;
+}
+
+p.terms a:hover,
+p.terms a:active {
+	color: #00959c;
+}
+
+.how-to a:link,
+.how-to a:visited {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.how-to a:hover,
+.how-to a:active {
+	color: #f0f0f0;
+	text-decoration: none;
+}
+
+.token-address {
+  margin-top: 20px;
+	text-align: center;
+	font-family: 'Raleway', sans-serif;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+.touch-logo {
+  width: 120px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* .progress-container {
+  width: 330px;
+  height: 36px;
+  margin: 24px auto 12px auto;
+  border: 3px #ccc solid;
+}
+
+#progress-bar {
+  margin: 0;
+  padding: 0;
+  transition: 0.2s ease;
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  background: #00adb5;
+  position: relative;
+}
+
+#progress-amount {
+	margin: 20px auto 10px auto;
+  height: 36px;
+  font-size: 16pt;
+  line-height: 36px;
+  display: block;
+  font-weight: 700;
+  color: #666;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Raleway', sans-serif;
+} */
+/* 
+.how-to-icon {
+  width: 120px;
+  margin: 20px auto;
+  border-radius: 1000px;
+  display: block;
+}
+
+.how-to-img {
+  max-width: 100%;
+  display: block;
+  margin: 10px auto;
+}
+
+.how-to-video {
+  width: 560px;
+  height: 420px;
+  display: block;
+  margin: 10px auto;
+} */
+
+/* .input-field {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+  margin-top: 40px;
+} */
+
+/* input[type='number'] {
+  -moz-appearance:textfield;
+} */
+.tab {
+  display: none;
+}
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input.eth-field {
+  font-family: 'Karla', sans-serif;
+  font-size: 16pt;
+  color: #666;
+  margin: 0;
+  padding: 0;
+  height: 48px;
+  width: 245px;
+  display: inline;
+  border: none;
+  border-bottom: 2px #ccc solid;
+  padding-left: 12px;
+  background-color: #f0f0f0;
+  transition: 0.2s;
+}
+
+input.eth-field:focus {
+  border-bottom: 2px #00adb5 solid;
+  transition: 0.2s;
+}
+
+input.copy {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10pt;
+  color: #666;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 0;
+  height: 48px;
+  width: 330px;
+  display: block;
+  border: none;
+  border-bottom: 2px #ccc solid;
+  padding-left: 12px;
+  background-color: #f0f0f0;
+  transition: 0.2s;
+}
+
+input.copy:focus {
+  border-bottom: 2px #00adb5 solid;
+  transition: 0.2s;
+} */
+
+.show-eth {
+  height: 48px;
+  margin-left: -5px;
+  line-height: 48px;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  background-color: #00adb5;
+  padding: 0 10px;
+}
+
+
+.copyBtn {
+	font-family: 'Raleway', sans-serif;
+  display: block;
+  border: none;
+  margin: 10px auto;
+  margin-top: 20px;
+  width: 190px;
+  height: 52px;
+  font-size: 12pt;
+  line-height: 52px;
+  color: #fff;
+  text-align: center;
+  background-color: #00adb5;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.copyBtn:hover {
+  background-color: #00c5cf;
+  width: 330px;
+  transition: 0.2s;
+}
+
+.copyBtn:active {
+  background-color: #00959c;
+  transition: 0.2s;
+}
+
+.downloads {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.downloads-text {
+	display: block;
+	color: #666;
+	font-weight: bold;
+}
+
+.downloads a {
+	display: inline-block;
+	width: 140px;
+}
+
+.downloads a:link,
+.downloads a:visited {
+	font-family: 'Raleway', sans-serif;
+  margin-top: 20px;
+  height: 52px;
+  font-size: 12pt;
+  line-height: 52px;
+  color: #fff;
+  text-align: center;
+  background-color: #666;
+  cursor: pointer;
+  transition: 0.2s;
+	text-decoration: none;
+}
+
+.downloads a:hover,
+.downloads a:active {
+	background: #333;
+}
+
+.token-address-styling {
+	margin-top: 20px;
+}
+
+.fiat-email {
+	text-align: center;
+}
+
+section {
+  display: none;
+  padding: 20px 0 0;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  /* padding: 16px 24px; */
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  padding: 24px;
+  transition: 0.1s;
+  background-color: #00c5cf;
+  border-bottom: 2px #fff solid;
+}
+
+label:hover {
+  cursor: pointer;
+  background-color: #00dde9;
+}
+
+input:checked + label {
+  color: #fff;
+  cursor: default;
+  background-image: linear-gradient(#00959c, #00adb5);
+  transition: 0.1s;
+  border-bottom: 2px #00adb5 solid;
+}
+
+#tab1:checked ~ #metamask,
+#tab2:checked ~ #myetherwallet,
+#tab3:checked ~ #parity,
+#tab4:checked ~ #mist,
+#tab5:checked ~ #trust {
+  display: block;
+}
+
+.tab-icon {
+  width: 32px;
+  border-radius: 1000px;
+}
+
+.qr-code {
+  display: block;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 800px) {
+  /* .use-desktop {
+    display: block;
+		position: fixed;
+  } */
+
+  .left {
+    width: 100%;
+    float: none;
+    height: auto;
+  }
+
+  .right {
+    width: 100%;
+    float: none;
+    height: auto;
+  }
+
+  .raise-fields {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 40px 0;
+  }
+
+  .how-to {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 40px 0;
+  }
+
+  .progress-container {
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  label {
+    padding: 12px;
+  }
+
+
+}
